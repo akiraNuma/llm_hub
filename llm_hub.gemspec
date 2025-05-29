@@ -8,9 +8,9 @@ Gem::Specification.new do |spec|
   spec.authors        = ['akiraNuma']
   spec.email          = ['akiran@akiranumakura.com']
 
-  spec.summary        = 'A Ruby interface for multiple LLM providers like OpenAI and Anthropic.'
-  spec.description    = 'A Ruby interface for multiple LLM providers like OpenAI and Anthropic. ' \
-                        'Provides easy access to Completion and Embedding functionalities.'
+  spec.summary        = 'This is a Ruby interface for multiple LLM providers, such as OpenAI and Anthropic.'
+  spec.description    = 'This is a Ruby interface for multiple LLM providers, such as OpenAI and Anthropic.' \
+                        'It provides easy access to Completion and Embedding functionalities.'
   spec.homepage       = 'https://github.com/akiraNuma/llm_hub'
   spec.license        = 'MIT'
   spec.required_ruby_version = '>= 3.1.0'
@@ -37,7 +37,5 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'activesupport'
   spec.add_dependency 'json'
 
-  spec.add_development_dependency 'rake', '~> 13.0'
-  spec.add_development_dependency 'rspec', '~> 3.0'
-  spec.add_development_dependency 'rubocop', '~> 1.21'
+  spec.metadata['rubygems_mfa_required'] = 'true'
 end

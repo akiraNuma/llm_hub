@@ -33,7 +33,9 @@ module LlmHub
         end
 
         def extract_answer(response_body)
-          response_body&.dig('content')&.first&.dig('text')
+          content_array = response_body&.dig('content')
+          first_content = content_array&.first
+          first_content&.dig('text')
         end
 
         def extract_tokens(response_body)

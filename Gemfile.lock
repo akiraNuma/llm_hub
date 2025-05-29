@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    llm_hub (0.1.0)
+    llm_hub (0.1.1)
       activesupport
       json
 

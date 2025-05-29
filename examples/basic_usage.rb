@@ -6,7 +6,7 @@ require 'llm_hub'
 
 # Completion example using OpenAI's GPT-4o-mini model
 client = LlmHub::Completion::Client.new(
-  api_key: ENV['OPENAI_API_KEY'],
+  api_key: ENV.fetch('OPENAI_API_KEY', nil),
   provider: :openai
 )
 
@@ -29,7 +29,7 @@ puts response[:answer] if response[:answer]
 
 # Embedding example using OpenAI's text-embedding-3-small model
 embedding_client = LlmHub::Embedding::Client.new(
-  api_key: ENV['OPENAI_API_KEY'],
+  api_key: ENV.fetch('OPENAI_API_KEY', nil),
   provider: :openai
 )
 

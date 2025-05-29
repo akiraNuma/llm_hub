@@ -33,7 +33,7 @@ module LlmHub
         provider_class.new(@api_key)
       end
 
-      def with_retry(&_block)
+      def with_retry(&)
         retries = 0
         begin
           yield

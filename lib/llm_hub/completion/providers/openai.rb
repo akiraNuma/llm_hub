@@ -32,7 +32,7 @@ module LlmHub
           choices = response_body&.dig('choices')
           return nil if choices.nil? || choices.empty?
 
-          choices[0]&.dig('message')&.dig('content')
+          choices[0]&.dig('message', 'content')
         end
 
         def extract_tokens(response_body)
