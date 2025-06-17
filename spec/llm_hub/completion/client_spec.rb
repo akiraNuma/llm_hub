@@ -15,6 +15,11 @@ RSpec.describe LlmHub::Completion::Client do
       expect(client.instance_variable_get(:@provider)).to eq('anthropic')
     end
 
+    it 'creates DeepSeek provider when specified' do
+      client = described_class.new(api_key: 'test-key', provider: 'deepseek')
+      expect(client.instance_variable_get(:@provider)).to eq('deepseek')
+    end
+
     it 'raises error for unsupported provider' do
       expect do
         described_class.new(api_key: 'test-key', provider: 'unsupported')
@@ -96,6 +101,43 @@ RSpec.describe LlmHub::Completion::Client do
                                         prompt_tokens: 12,
                                         completion_tokens: 6,
                                         total_tokens: 18
+                                      })
+      end
+    end
+
+    context 'with DeepSeek provider' do
+      let(:provider) { 'deepseek' }
+
+      it 'sends request to DeepSeek API' do
+        # mock
+        mock_response = {
+          'choices' => [
+            {
+              'message' => {
+                'content' => 'I am DeepSeek, doing great!'
+              }
+            }
+          ],
+          'usage' => {
+            'prompt_tokens' => 8,
+            'completion_tokens' => 7,
+            'total_tokens' => 15
+          }
+        }
+
+        allow(client).to receive(:make_request).and_return(mock_response)
+
+        result = client.ask_single_question(
+          system_prompt: system_prompt,
+          content: content,
+          model_name: 'deepseek-chat'
+        )
+
+        expect(result[:answer]).to eq('I am DeepSeek, doing great!')
+        expect(result[:tokens]).to eq({
+                                        prompt_tokens: 8,
+                                        completion_tokens: 7,
+                                        total_tokens: 15
                                       })
       end
     end

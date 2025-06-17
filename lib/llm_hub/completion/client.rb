@@ -8,12 +8,13 @@ module LlmHub
       # @return [Hash<Symbol, Class>] mapping of provider names to their classes
       PROVIDER_CLASSES = {
         openai: Providers::OpenAI,
-        anthropic: Providers::Anthropic
+        anthropic: Providers::Anthropic,
+        deepseek: Providers::Deepseek
       }.freeze
 
       # Initialize a new completion client
       # @param api_key [String] API key for the provider (required)
-      # @param provider [Symbol, String] Provider name (:openai, :anthropic) (required)
+      # @param provider [Symbol, String] Provider name (:openai, :anthropic, :deepseek) (required)
       # @see LlmHub::Common::ClientBase#initialize
       def initialize(api_key:, provider:)
         super
