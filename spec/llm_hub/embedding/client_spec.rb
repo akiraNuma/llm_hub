@@ -15,6 +15,37 @@ RSpec.describe LlmHub::Embedding::Client do
         described_class.new(api_key: 'test-key', provider: 'unsupported')
       end.to raise_error(ArgumentError, 'Unknown provider: unsupported.')
     end
+
+    it 'uses default config values when no custom values provided' do
+      client = described_class.new(api_key: 'test-key', provider: 'openai')
+      expect(client.open_time_out).to eq(LlmHub::Config::DEFAULT_OPEN_TIME_OUT)
+      expect(client.read_time_out).to eq(LlmHub::Config::DEFAULT_READ_TIME_OUT)
+      expect(client.retry_count).to eq(LlmHub::Config::DEFAULT_RETRY_COUNT)
+    end
+
+    it 'uses custom config values when provided' do
+      client = described_class.new(
+        api_key: 'test-key',
+        provider: 'openai',
+        open_time_out: 15,
+        read_time_out: 45,
+        retry_count: 2
+      )
+      expect(client.open_time_out).to eq(15)
+      expect(client.read_time_out).to eq(45)
+      expect(client.retry_count).to eq(2)
+    end
+
+    it 'uses mix of default and custom config values' do
+      client = described_class.new(
+        api_key: 'test-key',
+        provider: 'openai',
+        retry_count: 5
+      )
+      expect(client.open_time_out).to eq(LlmHub::Config::DEFAULT_OPEN_TIME_OUT)
+      expect(client.read_time_out).to eq(LlmHub::Config::DEFAULT_READ_TIME_OUT)
+      expect(client.retry_count).to eq(5)
+    end
   end
 
   describe '#post_embedding' do

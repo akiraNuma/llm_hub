@@ -15,8 +15,11 @@ module LlmHub
       # Initialize a new completion client
       # @param api_key [String] API key for the provider (required)
       # @param provider [Symbol, String] Provider name (:openai, :anthropic, :deepseek) (required)
+      # @param open_time_out [Integer] HTTP open timeout in seconds (optional, defaults to Config value)
+      # @param read_time_out [Integer] HTTP read timeout in seconds (optional, defaults to Config value)
+      # @param retry_count [Integer] Number of retries for failed requests (optional, defaults to Config value)
       # @see LlmHub::Common::ClientBase#initialize
-      def initialize(api_key:, provider:)
+      def initialize(api_key:, provider:, open_time_out: nil, read_time_out: nil, retry_count: nil)
         super
         @provider_client = create_provider_client
       end

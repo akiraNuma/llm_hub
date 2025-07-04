@@ -2,8 +2,8 @@
 
 module LlmHub
   module Config
-    OPEN_TIME_OUT = 5
-    READ_TIME_OUT = 20
-    RETRY_COUNT = 1
+    DEFAULT_OPEN_TIME_OUT = 5
+    DEFAULT_READ_TIME_OUT = 20
+    DEFAULT_RETRY_COUNT = 1
   end
 end

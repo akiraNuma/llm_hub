@@ -29,8 +29,8 @@ module LlmHub
         )
         http_client.use_ssl = uri.scheme == 'https'
         http_client.verify_mode = OpenSSL::SSL::VERIFY_NONE
-        http_client.open_timeout = LlmHub::Config::OPEN_TIME_OUT
-        http_client.read_timeout = LlmHub::Config::READ_TIME_OUT
+        http_client.open_timeout = @open_time_out
+        http_client.read_timeout = @read_time_out
         http_client
       end
     end

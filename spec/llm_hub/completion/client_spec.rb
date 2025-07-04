@@ -25,6 +25,37 @@ RSpec.describe LlmHub::Completion::Client do
         described_class.new(api_key: 'test-key', provider: 'unsupported')
       end.to raise_error(ArgumentError, 'Unknown provider: unsupported.')
     end
+
+    it 'uses default config values when no custom values provided' do
+      client = described_class.new(api_key: 'test-key', provider: 'openai')
+      expect(client.open_time_out).to eq(LlmHub::Config::DEFAULT_OPEN_TIME_OUT)
+      expect(client.read_time_out).to eq(LlmHub::Config::DEFAULT_READ_TIME_OUT)
+      expect(client.retry_count).to eq(LlmHub::Config::DEFAULT_RETRY_COUNT)
+    end
+
+    it 'uses custom config values when provided' do
+      client = described_class.new(
+        api_key: 'test-key',
+        provider: 'openai',
+        open_time_out: 10,
+        read_time_out: 30,
+        retry_count: 3
+      )
+      expect(client.open_time_out).to eq(10)
+      expect(client.read_time_out).to eq(30)
+      expect(client.retry_count).to eq(3)
+    end
+
+    it 'uses mix of default and custom config values' do
+      client = described_class.new(
+        api_key: 'test-key',
+        provider: 'openai',
+        open_time_out: 15
+      )
+      expect(client.open_time_out).to eq(15)
+      expect(client.read_time_out).to eq(LlmHub::Config::DEFAULT_READ_TIME_OUT)
+      expect(client.retry_count).to eq(LlmHub::Config::DEFAULT_RETRY_COUNT)
+    end
   end
 
   describe '#ask_single_question' do
