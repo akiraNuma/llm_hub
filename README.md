@@ -1,6 +1,6 @@
 # LlmHub
 
-This is a Ruby interface for multiple LLM providers, such as OpenAI, Anthropic, and DeepSeek.
+This is a Ruby interface for multiple LLM providers, such as OpenAI, Anthropic, DeepSeek, and Google Gemini.
 
 It provides easy access to Completion and Embedding functionalities.
 

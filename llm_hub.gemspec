@@ -8,8 +8,8 @@ Gem::Specification.new do |spec|
   spec.authors        = ['akiraNuma']
   spec.email          = ['akiran@akiranumakura.com']
 
-  spec.summary        = 'This is a Ruby interface for multiple LLM providers, such as OpenAI and Anthropic.'
-  spec.description    = 'This is a Ruby interface for multiple LLM providers, such as OpenAI and Anthropic.' \
+  spec.summary        = 'This is a Ruby interface for multiple LLM providers, such as OpenAI, Anthropic, DeepSeek, and Google Gemini.'
+  spec.description    = 'This is a Ruby interface for multiple LLM providers, such as OpenAI, Anthropic, DeepSeek, and Google Gemini.' \
                         'It provides easy access to Completion and Embedding functionalities.'
   spec.homepage       = 'https://github.com/akiraNuma/llm_hub'
   spec.license        = 'MIT'

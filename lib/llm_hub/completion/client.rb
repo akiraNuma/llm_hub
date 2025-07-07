@@ -9,12 +9,13 @@ module LlmHub
       PROVIDER_CLASSES = {
         openai: Providers::OpenAI,
         anthropic: Providers::Anthropic,
-        deepseek: Providers::Deepseek
+        deepseek: Providers::Deepseek,
+        google: Providers::Google
       }.freeze
 
       # Initialize a new completion client
       # @param api_key [String] API key for the provider (required)
-      # @param provider [Symbol, String] Provider name (:openai, :anthropic, :deepseek) (required)
+      # @param provider [Symbol, String] Provider name (:openai, :anthropic, :deepseek, :google) (required)
       # @param open_time_out [Integer] HTTP open timeout in seconds (optional, defaults to Config value)
       # @param read_time_out [Integer] HTTP read timeout in seconds (optional, defaults to Config value)
       # @param retry_count [Integer] Number of retries for failed requests (optional, defaults to Config value)
@@ -38,7 +39,7 @@ module LlmHub
         option_params: {}
       )
         with_retry do
-          url = @provider_client.url
+          url = provider_url(model_name)
           request_body = @provider_client.request_body(system_prompt, content, model_name, option_params)
           headers = @provider_client.headers
 
@@ -50,6 +51,17 @@ module LlmHub
       end
 
       private
+
+      # Get the appropriate URL for the provider
+      # @param model_name [String] Model name to use
+      # @return [String] Provider URL
+      def provider_url(model_name)
+        if @provider_client.is_a?(Providers::Google)
+          @provider_client.url(model_name)
+        else
+          @provider_client.url
+        end
+      end
 
       # Format the response from provider
       # @param response_body [Hash] Raw response from provider

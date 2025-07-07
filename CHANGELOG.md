@@ -1,5 +1,9 @@
 ## [Unreleased]
 
+## [0.3.0] - 2025-07-08
+
+- Added Google as a provider.
+
 ## [0.2.1] - 2025-07-04
 
 - Added new option parameters.

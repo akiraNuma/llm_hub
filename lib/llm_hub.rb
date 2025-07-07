@@ -19,6 +19,7 @@ require_relative 'llm_hub/completion/providers/base'
 require_relative 'llm_hub/completion/providers/openai'
 require_relative 'llm_hub/completion/providers/anthropic'
 require_relative 'llm_hub/completion/providers/deepseek'
+require_relative 'llm_hub/completion/providers/google'
 require_relative 'llm_hub/completion/client'
 
 # Embedding providers

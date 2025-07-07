@@ -20,6 +20,11 @@ RSpec.describe LlmHub::Completion::Client do
       expect(client.instance_variable_get(:@provider)).to eq('deepseek')
     end
 
+    it 'creates Google provider when specified' do
+      client = described_class.new(api_key: 'test-key', provider: 'google')
+      expect(client.instance_variable_get(:@provider)).to eq('google')
+    end
+
     it 'raises error for unsupported provider' do
       expect do
         described_class.new(api_key: 'test-key', provider: 'unsupported')
@@ -170,6 +175,63 @@ RSpec.describe LlmHub::Completion::Client do
                                         completion_tokens: 7,
                                         total_tokens: 15
                                       })
+      end
+    end
+
+    context 'with Google provider' do
+      let(:provider) { 'google' }
+      let(:google_mock_response) do
+        {
+          'candidates' => [
+            {
+              'content' => {
+                'parts' => [
+                  {
+                    'text' => 'I am Gemini, doing excellent!'
+                  }
+                ]
+              }
+            }
+          ],
+          'usageMetadata' => {
+            'promptTokenCount' => 15,
+            'candidatesTokenCount' => 8,
+            'totalTokenCount' => 23
+          }
+        }
+      end
+
+      it 'sends request to Google Gemini API' do
+        allow(client).to receive(:make_request).and_return(google_mock_response)
+
+        result = client.ask_single_question(
+          system_prompt: system_prompt,
+          content: content,
+          model_name: 'gemini-1.5-flash'
+        )
+
+        expect(result[:answer]).to eq('I am Gemini, doing excellent!')
+        expect(result[:tokens]).to eq({
+                                        prompt_tokens: 15,
+                                        completion_tokens: 8,
+                                        total_tokens: 23
+                                      })
+      end
+
+      it 'generates correct URL with model name for Google provider' do
+        expected_url = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-pro:generateContent'
+
+        # Mock make_request to capture the URL being called and verify it's correct
+        allow(client).to receive(:make_request) do |url, _request_body, _headers|
+          expect(url).to eq(expected_url)
+          google_mock_response
+        end
+
+        client.ask_single_question(
+          system_prompt: system_prompt,
+          content: content,
+          model_name: 'gemini-1.5-pro'
+        )
       end
     end
   end
