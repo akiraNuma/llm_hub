@@ -1,8 +1,19 @@
 # LlmHub
 
-This is a Ruby interface for multiple LLM providers, such as OpenAI, Anthropic, DeepSeek, and Google Gemini.
+A Ruby interface for multiple LLM providers with Completion and Embedding support.
 
-It provides easy access to Completion and Embedding functionalities.
+## Supported Providers
+
+### Completion API
+- **OpenAI**
+- **Anthropic**
+- **DeepSeek**
+- **Google**
+
+### Embedding API
+- **OpenAI**
+
+The gem provides a unified interface to interact with these different providers, making it easy to switch between them or use multiple providers in your application.
 
 ## Installation
 
